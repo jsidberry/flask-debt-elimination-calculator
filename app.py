@@ -5,6 +5,12 @@ app = Flask(__name__)
 # Temporary storage for demo purposes
 debts = []
 
+creditors = [
+    {"name": "Creditor A", "amount_owed": 5000, "minimum_payment": 100},
+    {"name": "Creditor B", "amount_owed": 3000, "minimum_payment": 150},
+    # Add more creditors as needed
+]
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -27,6 +33,14 @@ def home():
 def list_debts():
     # No sorting logic here; just pass the debts to the template
     return render_template('debts.html', debts=debts)
+
+@app.route('/creditors')
+def show_creditors():
+    return render_template('creditors.html', creditors=creditors)
+
+@app.route('/accelerator')
+def show_accelerator():
+    return render_template('accelerator.html', creditors=creditors)
 
 if __name__ == '__main__':
     app.run(debug=True)
