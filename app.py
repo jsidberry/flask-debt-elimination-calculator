@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, render_template_string
 
 app = Flask(__name__)
 
@@ -11,8 +11,8 @@ creditors = [
     # Add more creditors as needed
 ]
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
+@app.route('/form', methods=['GET', 'POST'])
+def show_form():
     if request.method == 'POST':
         # Get form details
         debt_details = {
@@ -27,7 +27,7 @@ def home():
         debts.append(debt_details)
         # Redirect to the debt list page
         return redirect(url_for('list_debts'))
-    return render_template('index.html')
+    return render_template('input_form.html')
 
 @app.route('/debts')
 def list_debts():
@@ -41,6 +41,39 @@ def show_creditors():
 @app.route('/accelerator')
 def show_accelerator():
     return render_template('accelerator.html', creditors=creditors)
+
+@app.route('/')
+def home():
+    return render_template_string("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debt Elimination Calculator</title>
+    <style>
+        body {
+            background-color: #eeeeee;
+            color: #757575;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .content {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Debt Elimination Calculator</h1>
+    </div>
+</body>
+</html>
+    """)
 
 if __name__ == '__main__':
     app.run(debug=True)
