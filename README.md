@@ -9,3 +9,5 @@ this project provides an app that visually help a user create a plan to eliminat
 * a form for adding debt-payoff acceleration information
 * a way to export the information into a spreadsheet like Excel for simple viewing
 
+## Operation
+* run `localhost:3000`
